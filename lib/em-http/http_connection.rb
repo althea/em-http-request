@@ -26,7 +26,7 @@ module EventMachine
     end
 
     def unbind(reason=nil)
-      @parent.unbind(reason)
+      @parent.unbind(reason || "Server_Unbind")
     end
   end
 
@@ -163,6 +163,7 @@ module EventMachine
     end
 
     def unbind(reason)
+      @error = reason
       @clients.map { |c| c.unbind(reason) }
 
       if r = @pending.shift
